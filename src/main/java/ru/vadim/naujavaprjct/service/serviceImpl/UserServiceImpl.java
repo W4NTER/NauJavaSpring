@@ -1,13 +1,12 @@
 package ru.vadim.naujavaprjct.service.serviceImpl;
 
 import org.springframework.stereotype.Service;
-import ru.vadim.naujavaprjct.entity.User;
-import ru.vadim.naujavaprjct.exception.UserAlreadyExistsError;
-import ru.vadim.naujavaprjct.exception.UserNotFoundError;
+import ru.vadim.naujavaprjct.entity.Users;
+import ru.vadim.naujavaprjct.entity.Users;
 import ru.vadim.naujavaprjct.repository.UserRepository;
 import ru.vadim.naujavaprjct.service.UserService;
 
-import java.util.List;
+import java.time.OffsetDateTime;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -18,23 +17,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(Long id, String username) throws UserAlreadyExistsError {
-            userRepository.create(new User(id, username));
+    public void addUser(Long id, String username) {
+        userRepository.save(new Users(username, OffsetDateTime.now(), OffsetDateTime.now()));
     }
 
     @Override
-    public User findById(Long id) throws UserNotFoundError {
-        return userRepository.read(id).orElseThrow(() -> new UserNotFoundError(id));
+    public Users findById(Long id) {
+        return userRepository.findById(id).orElseThrow();
     }
 
     @Override
-    public void deleteById(Long id) throws UserNotFoundError {
-        userRepository.delete(id);
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 
     @Override
     public void updateUsername(Long id, String username) {
-        userRepository.update(new User(id, username));
+        userRepository.save(
+                new Users(username, OffsetDateTime.now(), OffsetDateTime.now()));
     }
 
     @Override
