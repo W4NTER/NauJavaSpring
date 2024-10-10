@@ -5,7 +5,6 @@ import ru.vadim.naujavaprjct.exception.UserAlreadyExistsError;
 import ru.vadim.naujavaprjct.exception.UserNotFoundError;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
     void addUser(String username) throws UserAlreadyExistsError;
