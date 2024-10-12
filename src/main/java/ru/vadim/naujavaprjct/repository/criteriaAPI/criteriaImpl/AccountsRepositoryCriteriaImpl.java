@@ -5,12 +5,13 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import ru.vadim.naujavaprjct.entity.Accounts;
 import ru.vadim.naujavaprjct.entity.Users;
 import ru.vadim.naujavaprjct.repository.criteriaAPI.AccountsRepositoryCriteria;
 
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class AccountsRepositoryCriteriaImpl implements AccountsRepositoryCriteria {
@@ -21,7 +22,7 @@ public class AccountsRepositoryCriteriaImpl implements AccountsRepositoryCriteri
     }
 
     @Override
-    public List<Accounts> findByUserAndName(Users user, String name) {
+    public Optional<Accounts> findByUserAndName(Users user, String name) throws EmptyResultDataAccessException {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Accounts> criteriaQuery = criteriaBuilder.createQuery(Accounts.class);
 
@@ -30,6 +31,6 @@ public class AccountsRepositoryCriteriaImpl implements AccountsRepositoryCriteri
         Predicate namePredicate = criteriaBuilder.equal(accountsRoot.get("name"), name);
 
         criteriaQuery.select(accountsRoot).where(userPredicate, namePredicate);
-        return entityManager.createQuery(criteriaQuery).getResultList();
+        return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
     }
 }
