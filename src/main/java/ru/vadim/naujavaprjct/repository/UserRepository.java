@@ -1,17 +1,8 @@
 package ru.vadim.naujavaprjct.repository;
 
-import ru.vadim.naujavaprjct.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import ru.vadim.naujavaprjct.entity.Users;
 
-import java.util.List;
 
-public interface UserRepository {
-    void create(User user);
-
-    User read(Long userId);
-
-    void update(User user);
-
-    void delete(Long id);
-
-    List<User> findAll();
+public interface UserRepository extends JpaRepository<Users, Long> {
 }
