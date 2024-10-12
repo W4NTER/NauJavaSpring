@@ -2,6 +2,8 @@ package ru.vadim.naujavaprjct.repository.criteriaAPI;
 
 import ru.vadim.naujavaprjct.entity.Categories;
 
+import java.util.Optional;
+
 public interface CategoriesRepositoryCriteria {
-    Categories findCategoryByOperationId(Long operationId);
+    Optional<Categories> findCategoryByOperationId(Long operationId);
 }
