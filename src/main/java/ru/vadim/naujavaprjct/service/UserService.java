@@ -5,7 +5,7 @@ import ru.vadim.naujavaprjct.entity.Users;
 import java.util.List;
 
 public interface UserService {
-    void addUser(Long id, String username);
+    Users addUser(String username);
 
     Users findById(Long id);
 

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -34,13 +35,18 @@ public class Users {
     }
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Accounts> accountsSet;
+    private Set<Accounts> accountsSet;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Categories> categories;
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Users{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 }
