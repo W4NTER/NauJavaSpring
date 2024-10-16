@@ -46,7 +46,7 @@ public class CategoriesServiceTest {
         assertEquals(EXPECTED_COUNT_OPERATIONS,
                 operationsRepository.findAllByCategory(categoryWithId).size());
 
-        categoriesService.deleteCategory(categoryWithId);
+        categoriesService.deleteCategory(categoryWithId.getId());
         int EXPECTED_COUNT_OPERATIONS_AFTER_DEL = 0;
         assertEquals(EXPECTED_COUNT_OPERATIONS_AFTER_DEL,
                 operationsRepository.findAllByCategory(categoryWithId).size());
@@ -70,7 +70,7 @@ public class CategoriesServiceTest {
 
         var notSavedCategory = new Categories();
         assertThrows(DataAccessException.class, () ->
-                categoriesService.deleteCategory(notSavedCategory));
+                categoriesService.deleteCategory(notSavedCategory.getId()));
 
         int EXPECTED_COUNT_OPERATIONS = 2;
         assertEquals(EXPECTED_COUNT_OPERATIONS,

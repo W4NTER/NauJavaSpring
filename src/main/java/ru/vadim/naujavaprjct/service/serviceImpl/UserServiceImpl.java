@@ -17,8 +17,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(Long id, String username) {
-        userRepository.save(new Users(username, OffsetDateTime.now(), OffsetDateTime.now()));
+    public Users addUser(String username) {
+        return userRepository.save(new Users(username, OffsetDateTime.now(), OffsetDateTime.now()));
     }
 
     @Override

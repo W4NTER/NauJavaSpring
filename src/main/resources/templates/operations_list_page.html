@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Operations List</title>
+</head>
+<body>
+<h1>Operations List</h1>
+<table border="1", th:background="white">
+    <tr>
+        <th>ID</th>
+        <th>Account</th>
+        <th>Sum</th>
+        <th>Category</th>
+        <th>Comment</th>
+        <th>Created at</th>
+    </tr>
+    <tr th:each="operation : ${operations}">
+        <td th:text="${operation.getId()}"></td>
+        <td th:text="${operation.getAccount().getName()}"></td>
+        <td th:text="${operation.getSum()}"></td>
+        <td th:text="${operation.getCategory().getType()}"></td>
+        <td th:text="${operation.getComment()}"></td>
+        <td th:text="${operation.getCreatedAt()}"></td>
+    </tr>
+</table>
+</body>
+</html>

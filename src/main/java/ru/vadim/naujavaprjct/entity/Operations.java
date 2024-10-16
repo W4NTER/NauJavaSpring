@@ -38,10 +38,19 @@ public class Operations {
     @JoinColumn(name = "category_id")
     private Categories category;
 
-    public Operations(Long sum, String comment, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    public Operations(
+            Long sum,
+            String comment,
+            OffsetDateTime createdAt,
+            OffsetDateTime updatedAt,
+            Accounts accounts,
+            Categories categories
+    ) {
         this.sum = sum;
         this.comment = comment;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.account = accounts;
+        this.category = categories;
     }
 }
