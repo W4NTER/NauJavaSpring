@@ -7,7 +7,7 @@ import ru.vadim.naujavaprjct.entity.Categories;
 
 public interface CategoriesRepository extends JpaRepository<Categories, Long> {
     @Query("SELECT c FROM Categories c " +
-            "JOIN c.operationsSet o " +
+            "JOIN c.operationSet o " +
             "WHERE o.id = :operationId")
     Categories
     findCategoryByOperationId(@Param("operationId") Long operationId);

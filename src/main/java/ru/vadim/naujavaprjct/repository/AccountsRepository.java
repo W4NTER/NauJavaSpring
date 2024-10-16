@@ -5,6 +5,6 @@ import ru.vadim.naujavaprjct.entity.Accounts;
 import ru.vadim.naujavaprjct.entity.Users;
 
 
-public interface AccountsRepository extends JpaRepository<Accounts, Long> {
-    Accounts findByUserAndName(Users users, String name);
+public interface AccountsRepository extends JpaRepository<Account, Long> {
+    Account findByUserAndName(User user, String name);
 }

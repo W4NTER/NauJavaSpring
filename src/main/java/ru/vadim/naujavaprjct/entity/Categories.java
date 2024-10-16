@@ -4,9 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-
 import java.time.OffsetDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -32,12 +31,23 @@ public class Categories {
     private OffsetDateTime updatedAt;
 
     @OneToMany(mappedBy = "category")
-    private List<Operations> operationsSet;
+    private Set<Operations> operationsSet;
 
-    public Categories(String type, String title, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Users user;
+
+    public Categories(
+            String type,
+            String title,
+            OffsetDateTime createdAt,
+            OffsetDateTime updatedAt,
+            Users user
+    ) {
         this.type = type;
         this.title = title;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.user = user;
     }
 }

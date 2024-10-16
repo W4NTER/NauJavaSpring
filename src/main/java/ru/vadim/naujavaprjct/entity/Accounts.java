@@ -33,9 +33,16 @@ public class Accounts {
     @JoinColumn(name = "user_id")
     private Users user;
 
-    public Accounts(String name, OffsetDateTime createdAt, OffsetDateTime updatedAt, Users user) {
+    public Accounts(
+            String name,
+            Long balance,
+            OffsetDateTime createdAt,
+            OffsetDateTime updatedAt,
+            Users user) {
         this.name = name;
+        this.balance = balance;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.user = user;
     }
 }
