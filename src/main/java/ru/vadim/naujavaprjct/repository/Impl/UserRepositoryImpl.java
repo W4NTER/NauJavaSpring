@@ -1,7 +1,8 @@
-package ru.vadim.naujavaprjct.repository.repImpl;
+package ru.vadim.naujavaprjct.repository.Impl;
 
 import org.springframework.stereotype.Repository;
 import ru.vadim.naujavaprjct.entity.User;
+import ru.vadim.naujavaprjct.exception.UserAlreadyExistsError;
 import ru.vadim.naujavaprjct.exception.UserNotFoundError;
 import ru.vadim.naujavaprjct.repository.UserRepository;
 
@@ -19,8 +20,12 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void create(User user) {
-        userContainer.add(user);
+    public void create(User user) throws UserAlreadyExistsError {
+        if (findIndexUserById(user.getId()) == -1) {
+            userContainer.add(user);
+        } else {
+            throw new UserAlreadyExistsError(user.getId());
+        }
     }
 
     @Override
@@ -37,8 +42,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws UserNotFoundError {
         int index = findIndexUserById(id);
+        if (index == -1) {
+            throw new UserNotFoundError(id);
+        }
         userContainer.remove(index);
     }
 
