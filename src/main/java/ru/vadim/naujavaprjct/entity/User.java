@@ -1,29 +1,43 @@
 package ru.vadim.naujavaprjct.entity;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
+import java.time.OffsetDateTime;
+import java.util.List;
+
+@Entity
+@Getter
+@Setter
+@RequiredArgsConstructor
+@Table(name = "users")
 public class User {
+    @Id
+    @GeneratedValue
     private Long id;
+
+    @Column(name = "username", unique = true)
     private String username;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(name = "password")
+    private String password;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(name = "created_at")
+    private OffsetDateTime createdAt;
 
-    public String getUsername() {
-        return username;
-    }
+    @Column(name = "updated_at")
+    private OffsetDateTime updatedAt;
 
-    public void setUsername(String username) {
+    public User(String username, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
         this.username = username;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
-    public User(Long id, String username) {
-        this.id = id;
-        this.username = username;
-    }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Account> accountsSet;
 
     @Override
     public String toString() {

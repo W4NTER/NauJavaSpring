@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    void addUser(Long id, String username) throws UserAlreadyExistsError;
+    void addUser(String username) throws UserAlreadyExistsError;
 
     User findById(Long id) throws UserNotFoundError;
 
     void deleteById(Long id) throws UserNotFoundError;
 
-    void updateUsername(Long id, String username);
+    void updateUsername(Long id, String username) throws UserNotFoundError;
 
     List<User> listAll();
 }
