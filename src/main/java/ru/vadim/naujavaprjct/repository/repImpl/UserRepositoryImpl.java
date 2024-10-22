@@ -2,17 +2,20 @@ package ru.vadim.naujavaprjct.repository.repImpl;
 
 import org.springframework.stereotype.Repository;
 import ru.vadim.naujavaprjct.entity.User;
+import ru.vadim.naujavaprjct.exception.UserNotFoundError;
 import ru.vadim.naujavaprjct.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
     private final List<User> userContainer;
 
-    public UserRepositoryImpl(List<User> userContainer) {
-        this.userContainer = userContainer;
+    public UserRepositoryImpl() {
+        this.userContainer = new ArrayList<>();
     }
 
     @Override
@@ -21,10 +24,10 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User read(Long userId) {
+    public Optional<User> read(Long userId) {
         return userContainer.stream()
                 .filter(user -> user.getId().equals(userId))
-                .findFirst().orElse(null);
+                .findFirst();
     }
 
     @Override
