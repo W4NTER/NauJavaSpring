@@ -1,12 +1,12 @@
 package ru.vadim.naujavaprjct.service.serviceImpl;
 
 import org.springframework.stereotype.Service;
-import ru.vadim.naujavaprjct.entity.Users;
-import ru.vadim.naujavaprjct.entity.Users;
+import ru.vadim.naujavaprjct.entity.User;
 import ru.vadim.naujavaprjct.repository.UserRepository;
 import ru.vadim.naujavaprjct.service.UserService;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -18,11 +18,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(Long id, String username) {
-        userRepository.save(new Users(username, OffsetDateTime.now(), OffsetDateTime.now()));
+        userRepository.save(new User(username, OffsetDateTime.now(), OffsetDateTime.now()));
     }
 
     @Override
-    public Users findById(Long id) {
+    public User findById(Long id) {
         return userRepository.findById(id).orElseThrow();
     }
 
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUsername(Long id, String username) {
         userRepository.save(
-                new Users(username, OffsetDateTime.now(), OffsetDateTime.now()));
+                new User(username, OffsetDateTime.now(), OffsetDateTime.now()));
     }
 
     @Override

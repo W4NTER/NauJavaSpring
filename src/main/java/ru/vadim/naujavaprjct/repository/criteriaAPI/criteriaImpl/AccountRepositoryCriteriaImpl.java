@@ -7,26 +7,26 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
-import ru.vadim.naujavaprjct.entity.Accounts;
-import ru.vadim.naujavaprjct.entity.Users;
-import ru.vadim.naujavaprjct.repository.criteriaAPI.AccountsRepositoryCriteria;
+import ru.vadim.naujavaprjct.entity.Account;
+import ru.vadim.naujavaprjct.entity.User;
+import ru.vadim.naujavaprjct.repository.criteriaAPI.AccountRepositoryCriteria;
 
 import java.util.Optional;
 
 @Repository
-public class AccountsRepositoryCriteriaImpl implements AccountsRepositoryCriteria {
+public class AccountRepositoryCriteriaImpl implements AccountRepositoryCriteria {
     private final EntityManager entityManager;
 
-    public AccountsRepositoryCriteriaImpl(EntityManager entityManager) {
+    public AccountRepositoryCriteriaImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     @Override
-    public Optional<Accounts> findByUserAndName(Users user, String name) throws EmptyResultDataAccessException {
+    public Optional<Account> findByUserAndName(User user, String name) throws EmptyResultDataAccessException {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Accounts> criteriaQuery = criteriaBuilder.createQuery(Accounts.class);
+        CriteriaQuery<Account> criteriaQuery = criteriaBuilder.createQuery(Account.class);
 
-        Root<Accounts> accountsRoot = criteriaQuery.from(Accounts.class);
+        Root<Account> accountsRoot = criteriaQuery.from(Account.class);
         Predicate userPredicate = criteriaBuilder.equal(accountsRoot.get("user"), user);
         Predicate namePredicate = criteriaBuilder.equal(accountsRoot.get("name"), name);
 

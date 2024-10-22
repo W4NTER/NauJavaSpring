@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @RequiredArgsConstructor
 @Table(name = "categories")
-public class Categories {
+public class Category {
 
     @Id
     @GeneratedValue
@@ -32,9 +32,9 @@ public class Categories {
     private OffsetDateTime updatedAt;
 
     @OneToMany(mappedBy = "category")
-    private List<Operations> operationsSet;
+    private List<Operation> operationSet;
 
-    public Categories(String type, String title, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    public Category(String type, String title, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
         this.type = type;
         this.title = title;
         this.createdAt = createdAt;

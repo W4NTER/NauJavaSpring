@@ -11,7 +11,7 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class Accounts {
+public class Account {
 
     @Id
     @GeneratedValue
@@ -31,9 +31,9 @@ public class Accounts {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Users user;
+    private User user;
 
-    public Accounts(String name, OffsetDateTime createdAt, OffsetDateTime updatedAt, Users user) {
+    public Account(String name, OffsetDateTime createdAt, OffsetDateTime updatedAt, User user) {
         this.name = name;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;

@@ -3,14 +3,14 @@ package ru.vadim.naujavaprjct.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import ru.vadim.naujavaprjct.entity.Categories;
+import ru.vadim.naujavaprjct.entity.Category;
 
 import java.util.Optional;
 
-public interface CategoriesRepository extends JpaRepository<Categories, Long> {
-    @Query("SELECT c FROM Categories c " +
+public interface CategoryRepository extends JpaRepository<Category, Long> {
+    @Query("SELECT c FROM Category c " +
             "JOIN c.operationsSet o " +
             "WHERE o.id = :operationId")
-    Optional<Categories>
+    Optional<Category>
     findCategoryByOperationId(@Param("operationId") Long operationId);
 }

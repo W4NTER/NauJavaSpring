@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @RequiredArgsConstructor
 @Table(name = "users")
-public class Users {
+public class User {
     @Id
     @GeneratedValue
     private Long id;
@@ -27,14 +27,14 @@ public class Users {
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
-    public Users(String username, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    public User(String username, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
         this.username = username;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Accounts> accountsSet;
+    private List<Account> accountsSet;
 
     @Override
     public String toString() {

@@ -12,7 +12,7 @@ import java.time.OffsetDateTime;
 @Setter
 @RequiredArgsConstructor
 @Table(name = "operations")
-public class Operations {
+public class Operation {
 
     @Id
     @GeneratedValue
@@ -32,13 +32,13 @@ public class Operations {
 
     @ManyToOne
     @JoinColumn(name = "account_id")
-    private Accounts account;
+    private Account account;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Categories category;
+    private Category category;
 
-    public Operations(Long sum, String comment, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    public Operation(Long sum, String comment, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
         this.sum = sum;
         this.comment = comment;
         this.createdAt = createdAt;
