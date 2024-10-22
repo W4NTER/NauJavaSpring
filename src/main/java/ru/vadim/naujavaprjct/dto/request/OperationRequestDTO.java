@@ -1,11 +1,8 @@
-package ru.vadim.naujavaprjct.dto;
+package ru.vadim.naujavaprjct.dto.request;
 
-import java.time.OffsetDateTime;
-
-public record OperationsDTO(
+public record OperationRequestDTO(
         Long sum,
         String comment,
-
         Long account_id,
         Long category_id
 ) {

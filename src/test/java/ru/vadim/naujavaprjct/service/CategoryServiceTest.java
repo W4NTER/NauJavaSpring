@@ -13,7 +13,8 @@ import ru.vadim.naujavaprjct.repository.OperationRepository;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class CategoryServiceTest {
@@ -30,14 +31,14 @@ public class CategoryServiceTest {
     @Transactional
     @Rollback
     void testThatDeleteCategoryReturnedSucceed() {
-        Category category = new Category();
-        var categoryWithId = categoryRepository.save(category);
+        Category categories = new Category();
+        var categoryWithId = categoryRepository.save(categories);
 
         Operation operation1 = new Operation();
         Operation operation2 = new Operation();
 
-        operation1.setCategory(category);
-        operation2.setCategory(category);
+        operation1.setCategory(categories);
+        operation2.setCategory(categories);
 
         operationRepository.save(operation1);
         operationRepository.save(operation2);
@@ -46,7 +47,7 @@ public class CategoryServiceTest {
         assertEquals(EXPECTED_COUNT_OPERATIONS,
                 operationRepository.findAllByCategory(categoryWithId).size());
 
-        categoryService.deleteCategory(categoryWithId);
+        categoryService.deleteCategory(categoryWithId.getId());
         int EXPECTED_COUNT_OPERATIONS_AFTER_DEL = 0;
         assertEquals(EXPECTED_COUNT_OPERATIONS_AFTER_DEL,
                 operationRepository.findAllByCategory(categoryWithId).size());
@@ -56,21 +57,21 @@ public class CategoryServiceTest {
 
     @Test
     void testThatDeleteCategoryThrowsException() {
-        Category category = new Category();
-        var categoryWithId = categoryRepository.save(category);
+        Category categories = new Category();
+        var categoryWithId = categoryRepository.save(categories);
 
         Operation operation1 = new Operation();
         Operation operation2 = new Operation();
 
-        operation1.setCategory(category);
-        operation2.setCategory(category);
+        operation1.setCategory(categories);
+        operation2.setCategory(categories);
 
         operationRepository.save(operation1);
         operationRepository.save(operation2);
 
         var notSavedCategory = new Category();
         assertThrows(DataAccessException.class, () ->
-                categoryService.deleteCategory(notSavedCategory));
+                categoryService.deleteCategory(notSavedCategory.getId()));
 
         int EXPECTED_COUNT_OPERATIONS = 2;
         assertEquals(EXPECTED_COUNT_OPERATIONS,

@@ -1,12 +1,11 @@
 package ru.vadim.naujavaprjct.service;
 
-import ru.vadim.naujavaprjct.dto.OperationsDTO;
-import ru.vadim.naujavaprjct.entity.Categories;
-import ru.vadim.naujavaprjct.entity.Operations;
+import ru.vadim.naujavaprjct.dto.request.OperationRequestDTO;
+import ru.vadim.naujavaprjct.entity.Operation;
 
 import java.util.List;
 
 public interface OperationsService {
-    List<Operations> findAllByCategory(Long categoryId);
-    Operations addOperation(OperationsDTO operationsDTO);
+    List<Operation> findAllByCategory(Long categoryId);
+    Operation addOperation(OperationRequestDTO operationRequestDTO);
 }

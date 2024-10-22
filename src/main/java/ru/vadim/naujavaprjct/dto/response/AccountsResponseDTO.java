@@ -1,8 +1,9 @@
-package ru.vadim.naujavaprjct.dto;
+package ru.vadim.naujavaprjct.dto.response;
 
 import java.time.OffsetDateTime;
 
-public record AccountsDTO(
+public record AccountsResponseDTO(
+        Long id,
         String name,
         Long balance,
         OffsetDateTime createdAt,

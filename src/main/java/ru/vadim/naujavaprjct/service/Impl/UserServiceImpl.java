@@ -2,8 +2,8 @@ package ru.vadim.naujavaprjct.service.Impl;
 
 import org.springframework.stereotype.Service;
 import ru.vadim.naujavaprjct.entity.User;
-import ru.vadim.naujavaprjct.exception.UserAlreadyExistsError;
-import ru.vadim.naujavaprjct.exception.UserNotFoundError;
+import ru.vadim.naujavaprjct.exception.UsernameAlreadyInUseException;
+import ru.vadim.naujavaprjct.exception.UserNotFoundException;
 import ru.vadim.naujavaprjct.repository.UserRepository;
 import ru.vadim.naujavaprjct.service.UserService;
 
@@ -20,41 +20,41 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(String username) throws UserAlreadyExistsError {
+    public User addUser(String username) {
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isPresent()) {
-            throw new UserAlreadyExistsError(username);
+            throw new UsernameAlreadyInUseException(username);
         } else {
-            userRepository.save(new User(username, OffsetDateTime.now(), OffsetDateTime.now()));
+            return userRepository.save(new User(username, OffsetDateTime.now(), OffsetDateTime.now()));
         }
     }
 
     @Override
-    public User findById(Long id) throws UserNotFoundError {
+    public User findById(Long id) {
         var user = userRepository.findById(id);
         if (user.isPresent()) {
             return user.get();
         } else {
-            throw new UserNotFoundError(id);
+            throw new UserNotFoundException(id);
         }
     }
 
     @Override
-    public void deleteById(Long id) throws UserNotFoundError {
+    public void deleteById(Long id) {
         if (userRepository.findById(id).isPresent()) {
             userRepository.deleteById(id);
         } else {
-            throw new UserNotFoundError(id);
+            throw new UserNotFoundException(id);
         }
     }
 
     @Override
-    public void updateUsername(Long id, String username) throws UserNotFoundError {
+    public void updateUsername(Long id, String username) {
         if (userRepository.findByUsername(username).isPresent()) {
             userRepository.save(
                     new User(username, OffsetDateTime.now(), OffsetDateTime.now()));
         } else {
-            throw new UserNotFoundError(id);
+            throw new UserNotFoundException(id);
         }
     }
 
