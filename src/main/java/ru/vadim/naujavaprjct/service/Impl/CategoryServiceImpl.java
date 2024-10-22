@@ -1,4 +1,4 @@
-package ru.vadim.naujavaprjct.service.serviceImpl;
+package ru.vadim.naujavaprjct.service.Impl;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;

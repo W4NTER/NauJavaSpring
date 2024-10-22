@@ -1,4 +1,4 @@
-package ru.vadim.naujavaprjct.repository.criteriaAPI.criteriaImpl;
+package ru.vadim.naujavaprjct.repository.criteriaAPI.Impl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;

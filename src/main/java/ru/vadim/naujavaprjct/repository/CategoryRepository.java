@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query("SELECT c FROM Category c " +
-            "JOIN c.operationsSet o " +
+            "JOIN c.operationSet o " +
             "WHERE o.id = :operationId")
     Optional<Category>
     findCategoryByOperationId(@Param("operationId") Long operationId);

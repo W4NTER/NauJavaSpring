@@ -1,4 +1,4 @@
-package ru.vadim.naujavaprjct.repository.criteriaAPI.criteriaImpl;
+package ru.vadim.naujavaprjct.repository.criteriaAPI.Impl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -25,7 +25,7 @@ public class CategoryRepositoryCriteriaImpl implements CategoryRepositoryCriteri
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Category> criteriaQuery = criteriaBuilder.createQuery(Category.class);
         Root<Category> categoriesRoot = criteriaQuery.from(Category.class);
-        Join<Category, Operation> operationsJoin = categoriesRoot.join("operationsSet");
+        Join<Category, Operation> operationsJoin = categoriesRoot.join("operationSet");
 
         criteriaQuery.where(criteriaBuilder.equal(operationsJoin.get("id"), operationId));
 
