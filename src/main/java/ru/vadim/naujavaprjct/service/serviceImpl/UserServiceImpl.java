@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(Long id, String username) throws UserAlreadyExistsError {
-            userRepository.create(new User(id, username));
+    public void addUser(String username) {
+        userRepository.create(username);
     }
 
     @Override

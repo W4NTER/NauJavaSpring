@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    void addUser(Long id, String username) throws UserAlreadyExistsError;
+    void addUser(String username);
 
     User findById(Long id) throws UserNotFoundError;
 

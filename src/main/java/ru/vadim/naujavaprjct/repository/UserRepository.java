@@ -1,14 +1,13 @@
 package ru.vadim.naujavaprjct.repository;
 
 import ru.vadim.naujavaprjct.entity.User;
-import ru.vadim.naujavaprjct.exception.UserAlreadyExistsError;
 import ru.vadim.naujavaprjct.exception.UserNotFoundError;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository {
-    void create(User user) throws UserAlreadyExistsError;
+    void create(String username);
 
     Optional<User> read(Long userId);
 

@@ -6,9 +6,7 @@ import ru.vadim.naujavaprjct.exception.UserAlreadyExistsError;
 import ru.vadim.naujavaprjct.exception.UserNotFoundError;
 import ru.vadim.naujavaprjct.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.IntStream;
 
 @Repository
@@ -20,12 +18,9 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void create(User user) throws UserAlreadyExistsError {
-        if (findIndexUserById(user.getId()) == -1) {
-            userContainer.add(user);
-        } else {
-            throw new UserAlreadyExistsError(user.getId());
-        }
+    public void create(String username) {
+        Random random = new Random();
+       userContainer.add(new User(random.nextLong(0, Long.MAX_VALUE), username));
     }
 
     @Override
