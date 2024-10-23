@@ -50,9 +50,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUsername(Long id, String username) throws UserNotFoundError {
-        if (userRepository.findByUsername(username).isPresent()) {
-            userRepository.save(
-                    new User(username, OffsetDateTime.now(), OffsetDateTime.now()));
+        var userOpt = userRepository.findByUsername(username);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            user.setUsername(username);
+            user.setUpdatedAt(OffsetDateTime.now());
+            userRepository.save(user);
         } else {
             throw new UserNotFoundError(id);
         }
