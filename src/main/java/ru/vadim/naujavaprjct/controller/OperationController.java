@@ -9,7 +9,7 @@ import ru.vadim.naujavaprjct.entity.Operation;
 import ru.vadim.naujavaprjct.service.OperationsService;
 
 
-//@RestController
+
 @Controller
 @RequestMapping("/operations")
 public class OperationController {

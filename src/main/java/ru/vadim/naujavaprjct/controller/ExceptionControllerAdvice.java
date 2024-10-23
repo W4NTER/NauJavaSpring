@@ -21,49 +21,49 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(java.lang.Exception.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String exception(java.lang.Exception e) {
+    public CustomExceptionDto exception(java.lang.Exception e) {
         LOGGER.info(e.getMessage());
-        return CustomExceptionDto.create(e).getMessage();
+        return CustomExceptionDto.create(e);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String exception(ResourceNotFoundException e) {
+    public CustomExceptionDto exception(ResourceNotFoundException e) {
         LOGGER.info(e.getMessage());
-        return CustomExceptionDto.create(e).getMessage();
+        return CustomExceptionDto.create(e);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String userNotFound(UserNotFoundException e) {
+    public CustomExceptionDto userNotFound(UserNotFoundException e) {
         LOGGER.info(String.format("Exception type - (%s), Message - %s", e.getErrorType(), e.getMessage()));
-        return CustomExceptionDto.create("Пользователь не найден").getMessage();
+        return CustomExceptionDto.create("Пользователь не найден");
     }
 
     @ExceptionHandler(UsernameAlreadyInUseException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String conflictUser(UsernameAlreadyInUseException e) {
+    public CustomExceptionDto conflictUser(UsernameAlreadyInUseException e) {
         LOGGER.info(String.format("Exception type - (%s), Message - %s", e.getErrorType(), e.getMessage()));
-        return CustomExceptionDto.create("Username уже испльзуется другим пользователем").getMessage();
+        return CustomExceptionDto.create("Username уже испльзуется другим пользователем");
     }
 
     @ExceptionHandler(EntityAlreadyExistsException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String entityAlreadyExists(EntityAlreadyExistsException e) {
+    public CustomExceptionDto entityAlreadyExists(EntityAlreadyExistsException e) {
         LOGGER.info(String.format("Exception type - (%s), Message - %s", e.getErrorType(), e.getMessage()));
-        return CustomExceptionDto.create(e.getMessage()).getMessage();
+        return CustomExceptionDto.create(e.getMessage());
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String conflictUser(EntityNotFoundException e) {
+    public CustomExceptionDto conflictUser(EntityNotFoundException e) {
         LOGGER.info(String.format("Exception type - (%s), Message - %s", e.getErrorType(), e.getMessage()));
-        return CustomExceptionDto.create(e.getMessage()).getMessage();
+        return CustomExceptionDto.create(e.getMessage());
     }
 
 }
