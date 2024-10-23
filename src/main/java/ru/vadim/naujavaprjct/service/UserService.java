@@ -16,4 +16,6 @@ public interface UserService {
     void updateUsername(UserRequestDTO userRequestDTO);
 
     List<UserResponseDTO> listAll();
+
+    UserResponseDTO findByUsername(String username);
 }

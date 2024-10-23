@@ -1,6 +1,5 @@
 package ru.vadim.naujavaprjct.service.Impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import ru.vadim.naujavaprjct.dto.request.UserRequestDTO;
 import ru.vadim.naujavaprjct.dto.response.UserResponseDTO;
@@ -57,14 +56,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUsername(UserRequestDTO userRequestDTO) {
-        if (userRepository.findByUsername(userRequestDTO.username()).isPresent()) {
-            userRepository.save(
-                    new User(
-                            userRequestDTO.username(),
-                            OffsetDateTime.now(),
-                            OffsetDateTime.now()));
+        var userOpt = userRepository.findByUsername(userRequestDTO.username());
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            user.setUsername(userRequestDTO.username());
+            userRepository.save(user);
         } else {
-            throw new UserNotFoundException(userRequestDTO.id());
+            throw new UserNotFoundException("User not found");
         }
     }
 
@@ -72,5 +70,15 @@ public class UserServiceImpl implements UserService {
     public List<UserResponseDTO> listAll() {
         return userRepository.findAll().stream()
                 .map(user -> objectMapper.convertValue(user, UserResponseDTO.class)).toList();
+    }
+
+    @Override
+    public UserResponseDTO findByUsername(String username) {
+        var userOpt =  userRepository.findByUsername(username);
+        if (userOpt.isPresent()) {
+            return userOpt.get();
+        } else {
+            throw new UserNotFoundException("User not found");
+        }
     }
 }
