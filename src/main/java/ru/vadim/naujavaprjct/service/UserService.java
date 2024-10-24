@@ -1,6 +1,7 @@
 package ru.vadim.naujavaprjct.service;
 
 import ru.vadim.naujavaprjct.entity.User;
+import ru.vadim.naujavaprjct.exception.CustomErrorException;
 import ru.vadim.naujavaprjct.exception.UserAlreadyExistsError;
 import ru.vadim.naujavaprjct.exception.UserNotFoundError;
 
@@ -14,7 +15,7 @@ public interface UserService {
 
     void deleteById(Long id) throws UserNotFoundError;
 
-    void updateUsername(Long id, String username) throws UserNotFoundError;
+    void updateUsername(Long id, String username) throws CustomErrorException;
 
     List<User> listAll();
 }

@@ -1,7 +1,9 @@
 package ru.vadim.naujavaprjct.service.Impl;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.vadim.naujavaprjct.entity.User;
+import ru.vadim.naujavaprjct.exception.CustomErrorException;
 import ru.vadim.naujavaprjct.exception.UserAlreadyExistsError;
 import ru.vadim.naujavaprjct.exception.UserNotFoundError;
 import ru.vadim.naujavaprjct.repository.UserRepository;
@@ -49,15 +51,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUsername(Long id, String username) throws UserNotFoundError {
-        var userOpt = userRepository.findByUsername(username);
-        if (userOpt.isPresent()) {
+    @Transactional
+    public void updateUsername(Long id, String username) throws CustomErrorException {
+        var userOpt = userRepository.findById(id);
+        if (userRepository.findByUsername(username).isPresent()) {
+            throw new UserAlreadyExistsError(username);
+        } else if (userOpt.isEmpty()) {
+            throw new UserNotFoundError(id);
+        } else {
             User user = userOpt.get();
             user.setUsername(username);
             user.setUpdatedAt(OffsetDateTime.now());
             userRepository.save(user);
-        } else {
-            throw new UserNotFoundError(id);
         }
     }
 
