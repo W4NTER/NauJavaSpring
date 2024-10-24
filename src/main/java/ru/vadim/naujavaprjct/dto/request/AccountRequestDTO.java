@@ -1,6 +1,6 @@
 package ru.vadim.naujavaprjct.dto.request;
 
-public record AccountsRequestDTO(
+public record AccountRequestDTO(
         String name,
         Long balance,
         Long userId

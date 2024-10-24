@@ -2,7 +2,7 @@ package ru.vadim.naujavaprjct.dto.response;
 
 import java.time.OffsetDateTime;
 
-public record CategoriesResponseDTO(
+public record CategoryResponseDTO(
         Long id,
         String type,
         String title,

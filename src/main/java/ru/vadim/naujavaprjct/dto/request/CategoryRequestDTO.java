@@ -1,8 +1,6 @@
 package ru.vadim.naujavaprjct.dto.request;
 
-import java.time.OffsetDateTime;
-
-public record CategoriesRequestDTO(
+public record CategoryRequestDTO(
         String type,
         String title,
         Long userId

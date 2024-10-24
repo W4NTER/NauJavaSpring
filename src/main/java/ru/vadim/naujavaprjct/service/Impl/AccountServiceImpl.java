@@ -1,7 +1,9 @@
 package ru.vadim.naujavaprjct.service.Impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
-import ru.vadim.naujavaprjct.dto.request.AccountsRequestDTO;
+import ru.vadim.naujavaprjct.dto.request.AccountRequestDTO;
+import ru.vadim.naujavaprjct.dto.response.AccountResponseDTO;
 import ru.vadim.naujavaprjct.entity.Account;
 import ru.vadim.naujavaprjct.exception.EntityAlreadyExistsException;
 import ru.vadim.naujavaprjct.exception.EntityNotFoundException;
@@ -18,39 +20,42 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRepositoryCriteria accountRepositoryCriteria;
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
+    private final ObjectMapper objectMapper;
 
     public AccountServiceImpl(AccountRepositoryCriteria accountRepositoryCriteria,
                               AccountRepository accountRepository,
-                              UserRepository userRepository) {
+                              UserRepository userRepository, ObjectMapper objectMapper) {
         this.accountRepositoryCriteria = accountRepositoryCriteria;
         this.accountRepository = accountRepository;
         this.userRepository = userRepository;
+        this.objectMapper = objectMapper;
     }
 
     @Override
-    public Account findByUserAndName(Long userId, String name) {
+    public AccountResponseDTO findByUserAndName(Long userId, String accountName) {
         var user = userRepository.findById(userId);
         if (user.isPresent()) {
-            return accountRepositoryCriteria.findByUserAndName(
-                    user.get(), name).orElseThrow(() ->
+            Account account = accountRepositoryCriteria.findByUserAndName(
+                    user.get(), accountName).orElseThrow(() ->
                     new EntityNotFoundException(Account.class.getSimpleName()));
+            return objectMapper.convertValue(account, AccountResponseDTO.class);
         } else {
             throw new UserNotFoundException(userId);
         }
     }
 
     @Override
-    public Account addAccount(AccountsRequestDTO account) {
+    public AccountResponseDTO addAccount(AccountRequestDTO account) {
         if (accountRepository.findAccountByName(account.name()).isPresent()) {
             throw new EntityAlreadyExistsException(Account.class.getSimpleName());
         }
-        return accountRepository.save(new Account(
+        return objectMapper.convertValue(accountRepository.save(new Account(
                 account.name(),
                 account.balance(),
                 OffsetDateTime.now(),
                 OffsetDateTime.now(),
                 userRepository.findById(account.userId()).orElseThrow(() ->
                         new UserNotFoundException(account.userId()))
-        ));
+        )), AccountResponseDTO.class);
     }
 }

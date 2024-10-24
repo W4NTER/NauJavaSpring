@@ -1,17 +1,19 @@
 package ru.vadim.naujavaprjct.service;
 
+import ru.vadim.naujavaprjct.dto.request.UserRequestDTO;
+import ru.vadim.naujavaprjct.dto.response.UserResponseDTO;
 import ru.vadim.naujavaprjct.entity.User;
 
 import java.util.List;
 
 public interface UserService {
-    User addUser(String username);
+    UserResponseDTO addUser(String username);
 
-    User findById(Long id);
+    UserResponseDTO findById(Long id);
 
     void deleteById(Long id);
 
-    void updateUsername(Long id, String username);
+    void updateUsername(UserRequestDTO userRequestDTO);
 
-    List<User> listAll();
+    List<UserResponseDTO> listAll();
 }

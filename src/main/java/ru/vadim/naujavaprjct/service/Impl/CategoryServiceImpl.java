@@ -1,11 +1,13 @@
 package ru.vadim.naujavaprjct.service.Impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
-import ru.vadim.naujavaprjct.dto.request.CategoriesRequestDTO;
+import ru.vadim.naujavaprjct.dto.request.CategoryRequestDTO;
+import ru.vadim.naujavaprjct.dto.response.CategoryResponseDTO;
 import ru.vadim.naujavaprjct.entity.Category;
 import ru.vadim.naujavaprjct.entity.Operation;
 import ru.vadim.naujavaprjct.exception.EntityAlreadyExistsException;
@@ -25,15 +27,17 @@ public class CategoryServiceImpl implements CategoryService {
     private final OperationRepository operationRepository;
     private final PlatformTransactionManager transactionManager;
     private final UserRepository userRepository;
+    private final ObjectMapper objectMapper;
 
     public CategoryServiceImpl(CategoryRepository categoryRepository,
                                OperationRepository operationRepository,
                                PlatformTransactionManager transactionManager,
-                               UserRepository userRepository) {
+                               UserRepository userRepository, ObjectMapper objectMapper) {
         this.categoryRepository = categoryRepository;
         this.operationRepository = operationRepository;
         this.transactionManager = transactionManager;
         this.userRepository = userRepository;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -57,17 +61,18 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category addCategory(CategoriesRequestDTO categories) {
-        if (categoryRepository.findCategoriesByType(categories.type()).isPresent()) {
+    public CategoryResponseDTO addCategory(CategoryRequestDTO categoryRequestDTO) {
+        if (categoryRepository.findCategoriesByType(categoryRequestDTO.type()).isPresent()) {
             throw new EntityAlreadyExistsException(Category.class.getSimpleName());
         }
-        return categoryRepository.save(new Category(
-                categories.type(),
-                categories.title(),
+        Category category = categoryRepository.save(new Category(
+                categoryRequestDTO.type(),
+                categoryRequestDTO.title(),
                 OffsetDateTime.now(),
                 OffsetDateTime.now(),
-                userRepository.findById(categories.userId()).orElseThrow(() ->
-                        new UserNotFoundException(categories.userId()))
+                userRepository.findById(categoryRequestDTO.userId()).orElseThrow(() ->
+                        new UserNotFoundException(categoryRequestDTO.userId()))
         ));
+        return objectMapper.convertValue(category, CategoryResponseDTO.class);
     }
 }

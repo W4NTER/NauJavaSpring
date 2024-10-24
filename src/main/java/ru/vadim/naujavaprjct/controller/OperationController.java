@@ -29,18 +29,6 @@ public class OperationController {
 
     @PostMapping("/add")
     public OperationResponseDTO addOperation(@RequestBody OperationRequestDTO operationRequestDTO) {
-        return castOperationToResponseDTO(operationsService.addOperation(operationRequestDTO));
-    }
-
-    private OperationResponseDTO castOperationToResponseDTO(Operation operation) {
-        return new OperationResponseDTO(
-                operation.getId(),
-                operation.getSum(),
-                operation.getComment(),
-                operation.getCreatedAt(),
-                operation.getUpdatedAt(),
-                operation.getAccount().getId(),
-                operation.getCategory().getId()
-        );
+        return operationsService.addOperation(operationRequestDTO);
     }
 }

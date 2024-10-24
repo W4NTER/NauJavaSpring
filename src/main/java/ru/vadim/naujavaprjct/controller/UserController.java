@@ -1,5 +1,6 @@
 package ru.vadim.naujavaprjct.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.bind.annotation.*;
 import ru.vadim.naujavaprjct.dto.response.UserResponseDTO;
 import ru.vadim.naujavaprjct.entity.User;
@@ -18,26 +19,18 @@ public class UserController {
 
     @GetMapping
     public List<UserResponseDTO> findAllUsers() {
-        return userService.listAll().stream().map(this::castUserToResponseDTO).toList();
+        return userService.listAll();
     }
 
-    @PostMapping("/{username}")
-    public UserResponseDTO addUser(@PathVariable String username) {
-        return castUserToResponseDTO(userService.addUser(username));
+
+    @PostMapping("/registration")
+    public UserResponseDTO addUser(@RequestParam String username) {
+        return userService.addUser(username);
     }
 
     @GetMapping("{id}")
     public UserResponseDTO getUser(@PathVariable Long id) {
-        return castUserToResponseDTO(userService.findById(id));
+        return userService.findById(id);
     }
 
-    private UserResponseDTO castUserToResponseDTO(User user) {
-        return new UserResponseDTO(
-                user.getId(),
-                user.getUsername(),
-                user.getPassword(),
-                user.getCreatedAt(),
-                user.getUpdatedAt()
-        );
-    }
 }

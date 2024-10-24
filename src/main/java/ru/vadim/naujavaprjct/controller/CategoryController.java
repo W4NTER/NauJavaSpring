@@ -1,8 +1,8 @@
 package ru.vadim.naujavaprjct.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ru.vadim.naujavaprjct.dto.request.CategoriesRequestDTO;
-import ru.vadim.naujavaprjct.dto.response.CategoriesResponseDTO;
+import ru.vadim.naujavaprjct.dto.request.CategoryRequestDTO;
+import ru.vadim.naujavaprjct.dto.response.CategoryResponseDTO;
 import ru.vadim.naujavaprjct.entity.Category;
 import ru.vadim.naujavaprjct.service.CategoryService;
 
@@ -21,19 +21,9 @@ public class CategoryController {
         categoryService.deleteCategory(categoryId);
     }
 
-    @PostMapping
-    public CategoriesResponseDTO addCategory(@RequestBody CategoriesRequestDTO category) {
-        return castCategoryToResponseDTO(categoryService.addCategory(category));
+    @PostMapping("/add")
+    public CategoryResponseDTO addCategory(@RequestBody CategoryRequestDTO category) {
+        return categoryService.addCategory(category);
     }
 
-    private CategoriesResponseDTO castCategoryToResponseDTO(Category category) {
-        return new CategoriesResponseDTO(
-                category.getId(),
-                category.getType(),
-                category.getTitle(),
-                category.getCreatedAt(),
-                category.getUpdatedAt(),
-                category.getUser().getId()
-        );
-    }
 }

@@ -1,11 +1,11 @@
 package ru.vadim.naujavaprjct.service;
 
-import ru.vadim.naujavaprjct.dto.request.AccountsRequestDTO;
-import ru.vadim.naujavaprjct.dto.response.AccountsResponseDTO;
+import ru.vadim.naujavaprjct.dto.request.AccountRequestDTO;
+import ru.vadim.naujavaprjct.dto.response.AccountResponseDTO;
 import ru.vadim.naujavaprjct.entity.Account;
 
 public interface AccountService {
-    Account findByUserAndName(Long userId, String name);
+    AccountResponseDTO findByUserAndName(Long userId, String accountName);
 
-    Account addAccount(AccountsRequestDTO account);
+    AccountResponseDTO addAccount(AccountRequestDTO account);
 }
