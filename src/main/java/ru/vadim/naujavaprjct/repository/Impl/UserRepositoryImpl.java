@@ -20,7 +20,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void create(String username) {
         Random random = new Random();
-       userContainer.add(new User(random.nextLong(0, Long.MAX_VALUE), username));
+       userContainer.add(new User(random.nextLong(Long.MAX_VALUE), username));
     }
 
     @Override
