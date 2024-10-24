@@ -1,12 +1,10 @@
-package ru.vadim.naujavaprjct.dto;
+package ru.vadim.naujavaprjct.exception;
 
-import ru.vadim.naujavaprjct.exception.ErrorType;
-
-public class CustomErrorDto extends Throwable{
+public class CustomErrorException extends Throwable{
     private ErrorType errorType;
     private String message;
 
-    public CustomErrorDto(ErrorType errorType, String message) {
+    public CustomErrorException(ErrorType errorType, String message) {
         this.errorType = errorType;
         this.message = message;
     }
