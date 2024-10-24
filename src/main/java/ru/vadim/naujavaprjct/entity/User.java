@@ -1,7 +1,5 @@
 package ru.vadim.naujavaprjct.entity;
 
-import java.util.UUID;
-
 public class User {
     private Long id;
     private String username;

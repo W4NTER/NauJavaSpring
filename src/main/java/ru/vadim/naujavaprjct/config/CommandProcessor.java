@@ -3,7 +3,7 @@ package ru.vadim.naujavaprjct.config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
-import ru.vadim.naujavaprjct.dto.CustomErrorDto;
+import ru.vadim.naujavaprjct.exception.CustomErrorException;
 import ru.vadim.naujavaprjct.entity.User;
 import ru.vadim.naujavaprjct.exception.NotValidIdError;
 import ru.vadim.naujavaprjct.service.UserService;
@@ -57,7 +57,7 @@ public class CommandProcessor {
                 default -> LOGGER.info("Введена неизвестная команда " +
                         "или в команде допущена ошибка");
             }
-        } catch (CustomErrorDto e) {
+        } catch (CustomErrorException e) {
             LOGGER.info(e.getMessage());
         } catch (ArrayIndexOutOfBoundsException e) {
             LOGGER.info("Комманда введена неправильно");
