@@ -1,5 +1,7 @@
 package ru.vadim.naujavaprjct.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,7 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private Set<Operation> operationSet;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

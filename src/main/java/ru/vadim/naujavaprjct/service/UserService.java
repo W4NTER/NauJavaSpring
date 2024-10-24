@@ -7,7 +7,7 @@ import ru.vadim.naujavaprjct.entity.User;
 import java.util.List;
 
 public interface UserService {
-    UserResponseDTO addUser(String username);
+    UserResponseDTO addUser(String username, String password);
 
     UserResponseDTO findById(Long id);
 

@@ -1,11 +1,15 @@
 package ru.vadim.naujavaprjct.service.Impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.vadim.naujavaprjct.dto.request.UserRequestDTO;
 import ru.vadim.naujavaprjct.dto.response.UserResponseDTO;
+import ru.vadim.naujavaprjct.entity.Authority;
 import ru.vadim.naujavaprjct.entity.User;
 import ru.vadim.naujavaprjct.exception.UsernameAlreadyInUseException;
 import ru.vadim.naujavaprjct.exception.UserNotFoundException;
+import ru.vadim.naujavaprjct.repository.AuthorityRepository;
 import ru.vadim.naujavaprjct.repository.UserRepository;
 import ru.vadim.naujavaprjct.service.UserService;
 
@@ -17,21 +21,27 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
+    private final PasswordEncoder encoder;
+    private final AuthorityRepository authorityRepository;
 
-    public UserServiceImpl(UserRepository userRepository, ObjectMapper objectMapper) {
+
+    public UserServiceImpl(UserRepository userRepository, ObjectMapper objectMapper, PasswordEncoder encoder, AuthorityRepository authorityRepository) {
         this.userRepository = userRepository;
         this.objectMapper = objectMapper;
+        this.encoder = encoder;
+        this.authorityRepository = authorityRepository;
     }
 
     @Override
-    public UserResponseDTO addUser(String username) {
+    public UserResponseDTO addUser(String username, String password) {
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isPresent()) {
             throw new UsernameAlreadyInUseException(username);
         } else {
-            return objectMapper.convertValue(userRepository.save(
-                    new User(username, OffsetDateTime.now(), OffsetDateTime.now()))
-            ,UserResponseDTO.class);
+            User user1 = userRepository.save(
+                    new User(username, OffsetDateTime.now(), OffsetDateTime.now(), encoder.encode(password)));
+            authorityRepository.save(new Authority("USER", user1));
+            return objectMapper.convertValue(user1, UserResponseDTO.class);
         }
     }
 
@@ -76,7 +86,7 @@ public class UserServiceImpl implements UserService {
     public UserResponseDTO findByUsername(String username) {
         var userOpt =  userRepository.findByUsername(username);
         if (userOpt.isPresent()) {
-            return userOpt.get();
+            return objectMapper.convertValue(userOpt.get(), UserResponseDTO.class);
         } else {
             throw new UserNotFoundException("User not found");
         }
