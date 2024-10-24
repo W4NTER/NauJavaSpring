@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Logout</title>
+</head>
+<body>
+<h1>Logout</h1>
+<p>You have successfully logged out.</p>
+
+<form action="#" th:action="@{/login}" method="get">
+    <button type="submit">Login Again</button>
+</form>
+
+<form action="#" th:action="@{/logout}" method="post">
+    <button type="submit">Logout</button>
+</form>
+
+</body>
+</html>

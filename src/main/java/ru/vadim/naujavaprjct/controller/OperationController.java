@@ -27,8 +27,8 @@ public class OperationController {
         return "operations_list_page";
     }
 
-    @PostMapping("/add")
-    public OperationResponseDTO addOperation(@RequestBody OperationRequestDTO operationRequestDTO) {
-        return operationsService.addOperation(operationRequestDTO);
-    }
+//    @PostMapping("/add")
+//    public OperationResponseDTO addOperation(@RequestBody OperationRequestDTO operationRequestDTO) {
+//        return operationsService.addOperation(operationRequestDTO);
+//    }
 }

@@ -1,9 +1,7 @@
 package ru.vadim.naujavaprjct.controller;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.bind.annotation.*;
 import ru.vadim.naujavaprjct.dto.response.UserResponseDTO;
-import ru.vadim.naujavaprjct.entity.User;
 import ru.vadim.naujavaprjct.service.UserService;
 
 import java.util.List;
@@ -22,13 +20,7 @@ public class UserController {
         return userService.listAll();
     }
 
-
-    @PostMapping("/registration")
-    public UserResponseDTO addUser(@RequestParam String username) {
-        return userService.addUser(username);
-    }
-
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public UserResponseDTO getUser(@PathVariable Long id) {
         return userService.findById(id);
     }
