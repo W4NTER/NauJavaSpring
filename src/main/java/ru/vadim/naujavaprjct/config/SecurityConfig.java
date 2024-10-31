@@ -34,7 +34,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/", "/login", "/registration").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/users").hasAuthority("ADMIN")
+                        .requestMatchers("/swagger-ui/**", "/users/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
