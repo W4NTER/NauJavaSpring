@@ -51,13 +51,14 @@ public class AccountServiceImpl implements AccountService {
         if (accountRepository.findAccountByName(account.name()).isPresent()) {
             throw new EntityAlreadyExistsException(Account.class.getSimpleName());
         }
+        Long userId = getUserId();
         return objectMapper.convertValue(accountRepository.save(new Account(
                 account.name(),
                 account.balance(),
                 OffsetDateTime.now(),
                 OffsetDateTime.now(),
-                userRepository.findById(account.userId()).orElseThrow(() ->
-                        new UserNotFoundException(account.userId()))
+                userRepository.findById(userId).orElseThrow(() ->
+                        new UserNotFoundException(userId))
         )), AccountResponseDTO.class);
     }
 
@@ -68,10 +69,10 @@ public class AccountServiceImpl implements AccountService {
                 .toList();
     }
 
-//    private Long getUserId() {
-//        var auth = SecurityContextHolder.getContext().getAuthentication();
-//        String username = auth.getName();
-//        return userRepository.findByUsername(username).get().getId();
-//    }
+    private Long getUserId() {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        return userRepository.findByUsername(username).get().getId();
+    }
 
 }

@@ -2,12 +2,13 @@ package ru.vadim.naujavaprjct.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import ru.vadim.naujavaprjct.dto.ReportBodyDTO;
+import ru.vadim.naujavaprjct.dto.ReportDTO;
 import ru.vadim.naujavaprjct.entity.Report;
 import ru.vadim.naujavaprjct.service.ReportService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("report")
@@ -28,5 +29,11 @@ public class ReportController {
         Report report = reportService.findReportById(id);
         model.addAttribute("reportBody", reportService.getReportBody(report));
         return "report";
+    }
+
+    @GetMapping
+    @ResponseBody
+    public List<ReportDTO> allReports() {
+        return reportService.findAll();
     }
 }

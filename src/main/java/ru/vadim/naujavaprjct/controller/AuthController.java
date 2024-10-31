@@ -1,6 +1,5 @@
 package ru.vadim.naujavaprjct.controller;
 
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +32,6 @@ public class AuthController
             return "registration";
         }
     }
-
 
     @GetMapping("/logout")
     public String logoutPage() {

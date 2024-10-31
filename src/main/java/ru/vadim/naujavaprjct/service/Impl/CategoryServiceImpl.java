@@ -66,20 +66,21 @@ public class CategoryServiceImpl implements CategoryService {
         if (categoryRepository.findCategoriesByType(categoryRequestDTO.type()).isPresent()) {
             throw new EntityAlreadyExistsException(Category.class.getSimpleName());
         }
+        Long userId = getUserId();
         Category category = categoryRepository.save(new Category(
                 categoryRequestDTO.type(),
                 categoryRequestDTO.title(),
                 OffsetDateTime.now(),
                 OffsetDateTime.now(),
-                userRepository.findById(categoryRequestDTO.userId()).orElseThrow(() ->
-                        new UserNotFoundException(categoryRequestDTO.userId()))
+                userRepository.findById(userId).orElseThrow(() ->
+                        new UserNotFoundException(userId))
         ));
         return objectMapper.convertValue(category, CategoryResponseDTO.class);
     }
 
-//    private Long getUserId() {
-//        var auth = SecurityContextHolder.getContext().getAuthentication();
-//        String username = auth.getName();
-//        return userRepository.findByUsername(username).get().getId();
-//    }
+    private Long getUserId() {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        return userRepository.findByUsername(username).get().getId();
+    }
 }

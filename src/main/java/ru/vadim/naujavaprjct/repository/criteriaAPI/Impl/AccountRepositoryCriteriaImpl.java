@@ -16,6 +16,8 @@ import java.util.Optional;
 @Repository
 public class AccountRepositoryCriteriaImpl implements AccountRepositoryCriteria {
     private final EntityManager entityManager;
+    private static final String USER_PREDICATE = "user";
+    private static final String NAME_PREDICATE = "name";
 
     public AccountRepositoryCriteriaImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -27,8 +29,8 @@ public class AccountRepositoryCriteriaImpl implements AccountRepositoryCriteria 
         CriteriaQuery<Account> criteriaQuery = criteriaBuilder.createQuery(Account.class);
 
         Root<Account> accountsRoot = criteriaQuery.from(Account.class);
-        Predicate userPredicate = criteriaBuilder.equal(accountsRoot.get("user"), user);
-        Predicate namePredicate = criteriaBuilder.equal(accountsRoot.get("name"), name);
+        Predicate userPredicate = criteriaBuilder.equal(accountsRoot.get(USER_PREDICATE), user);
+        Predicate namePredicate = criteriaBuilder.equal(accountsRoot.get(NAME_PREDICATE), name);
 
         criteriaQuery.select(accountsRoot).where(userPredicate, namePredicate);
         return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());

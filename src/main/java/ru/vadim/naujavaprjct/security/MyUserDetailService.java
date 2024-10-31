@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
 @Component
 public class MyUserDetailService implements UserDetailsService {
     private final UserRepository userRepository;
+    private static final String EXCEPTION_TEXT = "User not found";
+    private static final String ROLE_TEXT = "ROLE_";
 
     public MyUserDetailService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -24,7 +26,7 @@ public class MyUserDetailService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UserNotFoundException {
-        User appUser = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User not found"));
+        User appUser = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(EXCEPTION_TEXT));
         return new
                 org.springframework.security.core.userdetails.User(
                 appUser.getUsername(), appUser.getPassword(),
@@ -33,7 +35,7 @@ public class MyUserDetailService implements UserDetailsService {
 
     private Collection<GrantedAuthority> mapRoles(User appUser) {
         return appUser.getAuthorities().stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getAuthority()))
+                .map(role -> new SimpleGrantedAuthority(ROLE_TEXT + role.getAuthority()))
                 .collect(Collectors.toList());
     }
 }

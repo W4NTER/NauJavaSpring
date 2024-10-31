@@ -24,6 +24,8 @@ public class UserServiceImpl implements UserService {
     private final ObjectMapper objectMapper;
     private final PasswordEncoder encoder;
     private final AuthorityRepository authorityRepository;
+    private static final String USER_AUTHORITY = "USER";
+    private static final String EXCEPTION_TEXT_USER_NOT_FOUND = "User not found";
 
 
     public UserServiceImpl(UserRepository userRepository, ObjectMapper objectMapper, PasswordEncoder encoder, AuthorityRepository authorityRepository) {
@@ -41,7 +43,7 @@ public class UserServiceImpl implements UserService {
         } else {
             User user1 = userRepository.save(
                     new User(username, OffsetDateTime.now(), OffsetDateTime.now(), encoder.encode(password)));
-            authorityRepository.save(new Authority("USER", user1));
+            authorityRepository.save(new Authority(USER_AUTHORITY, user1));
             return objectMapper.convertValue(user1, UserResponseDTO.class);
         }
     }
@@ -73,7 +75,7 @@ public class UserServiceImpl implements UserService {
             user.setUsername(userRequestDTO.username());
             userRepository.save(user);
         } else {
-            throw new UserNotFoundException("User not found");
+            throw new UserNotFoundException(EXCEPTION_TEXT_USER_NOT_FOUND);
         }
     }
 
@@ -90,7 +92,7 @@ public class UserServiceImpl implements UserService {
         if (userOpt.isPresent()) {
             return objectMapper.convertValue(userOpt.get(), UserResponseDTO.class);
         } else {
-            throw new UserNotFoundException("User not found");
+            throw new UserNotFoundException(EXCEPTION_TEXT_USER_NOT_FOUND);
         }
     }
 }

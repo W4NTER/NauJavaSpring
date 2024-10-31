@@ -1,11 +1,11 @@
 package ru.vadim.naujavaprjct.service.Impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
+import ru.vadim.naujavaprjct.dto.ReportBodyDTO;
 import ru.vadim.naujavaprjct.dto.ReportDTO;
 import ru.vadim.naujavaprjct.dto.response.AccountResponseDTO;
 import ru.vadim.naujavaprjct.entity.Report;
@@ -32,6 +32,7 @@ public class ReportServiceImpl implements ReportService {
     private List<AccountResponseDTO> accounts;
     private Long countUsersTime;
     private Long findAllAccountsTime;
+    private static final String EMPTY_STRING = "";
 
     public ReportServiceImpl(UserService userService,
                              ReportRepository reportRepository,
@@ -47,7 +48,7 @@ public class ReportServiceImpl implements ReportService {
         Report report = reportRepository.save(
                 new Report(
                         ReportStatus.CREATED.toString(),
-                        "",
+                        EMPTY_STRING,
                         OffsetDateTime.now()));
         generateReport(report);
         return report.getId();
@@ -78,7 +79,7 @@ public class ReportServiceImpl implements ReportService {
                 report.setStatus(ReportStatus.COMPLETED.toString());
                 report.setBody(
                         objectMapper.writeValueAsString(
-                                new ReportDTO(
+                                new ReportBodyDTO(
                                         countUsers,
                                         countUsersTime,
                                         findAllAccountsTime,
@@ -106,11 +107,17 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public ReportDTO getReportBody(Report report) {
+    public ReportBodyDTO getReportBody(Report report) {
         try {
-            return objectMapper.readValue(report.getBody(), ReportDTO.class);
+            return objectMapper.readValue(report.getBody(), ReportBodyDTO.class);
         } catch (JsonProcessingException e) {
             throw new ReportException();
         }
+    }
+
+    @Override
+    public List<ReportDTO> findAll() {
+        return reportRepository.findAll().stream()
+                .map(rep -> objectMapper.convertValue(rep, ReportDTO.class)).toList();
     }
 }

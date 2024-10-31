@@ -15,6 +15,8 @@ import java.util.Optional;
 @Repository
 public class CategoryRepositoryCriteriaImpl implements CategoryRepositoryCriteria {
     private final EntityManager entityManager;
+    private static final String OPERATION_SET_STRING = "operationSet";
+    private static final String OPERATION_ID_STRING = "id";
 
     public CategoryRepositoryCriteriaImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -25,9 +27,9 @@ public class CategoryRepositoryCriteriaImpl implements CategoryRepositoryCriteri
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Category> criteriaQuery = criteriaBuilder.createQuery(Category.class);
         Root<Category> categoriesRoot = criteriaQuery.from(Category.class);
-        Join<Category, Operation> operationsJoin = categoriesRoot.join("operationSet");
+        Join<Category, Operation> operationsJoin = categoriesRoot.join(OPERATION_SET_STRING);
 
-        criteriaQuery.where(criteriaBuilder.equal(operationsJoin.get("id"), operationId));
+        criteriaQuery.where(criteriaBuilder.equal(operationsJoin.get(OPERATION_ID_STRING), operationId));
 
         return Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
     }

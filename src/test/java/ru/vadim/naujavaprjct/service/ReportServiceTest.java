@@ -15,7 +15,7 @@ public class ReportServiceTest {
     private ReportService reportService;
 
     @Test
-    void testThatGenerateReportReturnedSucceed() throws ExecutionException, InterruptedException {
+    void testThatGenerateReportReturnedSucceed() throws InterruptedException {
         Long reportId = reportService.creteReport();
         LOGGER.info(String.format("reportId = %d", reportId));
         Thread.sleep(200);

@@ -19,7 +19,7 @@ public class Report {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "body")
+    @Column(name = "body", columnDefinition = "text")
     private String body;
 
     @Column(name = "created_at")

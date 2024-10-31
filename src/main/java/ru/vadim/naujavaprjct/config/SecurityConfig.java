@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +24,7 @@ import static org.hibernate.sql.ast.SqlTreeCreationLogger.LOGGER;
 @EnableWebSecurity
 public class SecurityConfig {
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final String ADMIN_AUTHORITY = "ADMIN";
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -33,9 +35,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/", "/login", "/registration").permitAll()
-                        .requestMatchers("/swagger-ui", "/users/**", "/report/**").hasRole("ADMIN")
+                        .requestMatchers("/swagger-ui", "/users/**", "/report/**").hasRole(ADMIN_AUTHORITY)
                         .anyRequest().authenticated()
                 )
                 .formLogin(login ->  login
