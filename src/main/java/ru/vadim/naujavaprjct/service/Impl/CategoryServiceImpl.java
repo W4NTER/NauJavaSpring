@@ -2,6 +2,7 @@ package ru.vadim.naujavaprjct.service.Impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
@@ -75,4 +76,10 @@ public class CategoryServiceImpl implements CategoryService {
         ));
         return objectMapper.convertValue(category, CategoryResponseDTO.class);
     }
+
+//    private Long getUserId() {
+//        var auth = SecurityContextHolder.getContext().getAuthentication();
+//        String username = auth.getName();
+//        return userRepository.findByUsername(username).get().getId();
+//    }
 }

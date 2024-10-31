@@ -3,6 +3,7 @@ package ru.vadim.naujavaprjct.service.Impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.vadim.naujavaprjct.dto.request.UserRequestDTO;
 import ru.vadim.naujavaprjct.dto.response.UserResponseDTO;
 import ru.vadim.naujavaprjct.entity.Authority;
@@ -77,6 +78,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public List<UserResponseDTO> listAll() {
         return userRepository.findAll().stream()
                 .map(user -> objectMapper.convertValue(user, UserResponseDTO.class)).toList();

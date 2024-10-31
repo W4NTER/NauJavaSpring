@@ -10,11 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import ru.vadim.naujavaprjct.dto.CustomExceptionDTO;
-import ru.vadim.naujavaprjct.exception.CustomException;
-import ru.vadim.naujavaprjct.exception.EntityAlreadyExistsException;
-import ru.vadim.naujavaprjct.exception.EntityNotFoundException;
-import ru.vadim.naujavaprjct.exception.UsernameAlreadyInUseException;
-import ru.vadim.naujavaprjct.exception.UserNotFoundException;
+import ru.vadim.naujavaprjct.exception.*;
 
 @ControllerAdvice
 public class ExceptionControllerAdvice {
@@ -64,6 +60,14 @@ public class ExceptionControllerAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public CustomExceptionDTO conflictUser(EntityNotFoundException e) {
+        LOGGER.info(String.format("Exception type - (%s), Message - %s", e.getErrorType(), e.getMessage()));
+        return new CustomExceptionDTO(e.getErrorType(), e.getMessage());
+    }
+
+    @ExceptionHandler(ReportException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    public CustomExceptionDTO reportError(ReportException e) {
         LOGGER.info(String.format("Exception type - (%s), Message - %s", e.getErrorType(), e.getMessage()));
         return new CustomExceptionDTO(e.getErrorType(), e.getMessage());
     }

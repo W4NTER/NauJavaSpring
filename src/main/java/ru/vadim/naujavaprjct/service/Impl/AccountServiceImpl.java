@@ -1,6 +1,7 @@
 package ru.vadim.naujavaprjct.service.Impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.vadim.naujavaprjct.dto.request.AccountRequestDTO;
 import ru.vadim.naujavaprjct.dto.response.AccountResponseDTO;
@@ -14,6 +15,7 @@ import ru.vadim.naujavaprjct.repository.criteriaAPI.AccountRepositoryCriteria;
 import ru.vadim.naujavaprjct.service.AccountService;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -58,4 +60,18 @@ public class AccountServiceImpl implements AccountService {
                         new UserNotFoundException(account.userId()))
         )), AccountResponseDTO.class);
     }
+
+    @Override
+    public List<AccountResponseDTO> findAll() {
+        return accountRepository.findAll().stream()
+                .map(el -> objectMapper.convertValue(el, AccountResponseDTO.class))
+                .toList();
+    }
+
+//    private Long getUserId() {
+//        var auth = SecurityContextHolder.getContext().getAuthentication();
+//        String username = auth.getName();
+//        return userRepository.findByUsername(username).get().getId();
+//    }
+
 }

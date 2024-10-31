@@ -9,5 +9,4 @@ public class NauJavaPrjctApplication {
     public static void main(String[] args) {
         SpringApplication.run(NauJavaPrjctApplication.class, args);
     }
-
 }

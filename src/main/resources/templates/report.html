@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Статистический отчет</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center">Отчет</h2>
+
+    <h4>Количество зарегистрированных пользователей: <span th:text="${reportBody.countUsers()}"></span></h4>
+    <h4>Время, затраченное на вычисление количества пользователей: <span th:text="${reportBody.timeToCountUsers()}"></span> мс</h4>
+    <h4>Время, затраченное на получение счетов: <span th:text="${reportBody.timeToListAccounts()}"></span> мс</h4>
+    <h4>Время, затраченное на генерацию отчета: <span th:text="${reportBody.timeToGenerateReport()}"></span> мс</h4>
+
+    <h3 class="mt-4">Список счетов (пока всего, надо можно сделать по юзерам)</h3>
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+            <th>Название</th>
+            <th>Баланс</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="account : ${reportBody.accounts()}">
+            <td th:text="${account.name}"></td>
+            <td th:text="${account.balance()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
