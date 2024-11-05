@@ -4,7 +4,7 @@ import java.time.OffsetDateTime;
 
 public record ReportDTO(
         Long id,
-        String body,
+        ReportBodyDTO body,
         OffsetDateTime createdAt,
         String status
 ) {

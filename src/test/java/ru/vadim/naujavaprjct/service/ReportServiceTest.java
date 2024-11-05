@@ -5,8 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.concurrent.ExecutionException;
+import ru.vadim.naujavaprjct.service.reportService.ReportService;
 
 @SpringBootTest
 public class ReportServiceTest {
@@ -19,7 +18,7 @@ public class ReportServiceTest {
         Long reportId = reportService.creteReport();
         LOGGER.info(String.format("reportId = %d", reportId));
         Thread.sleep(200);
-        LOGGER.info("body - " + reportService.findReportById(reportId).getBody());
-        LOGGER.info(reportService.findReportById(reportId).getStatus());
+        LOGGER.info("body - " + reportService.findReportById(reportId).body());
+        LOGGER.info(reportService.findReportById(reportId).status());
     }
 }
