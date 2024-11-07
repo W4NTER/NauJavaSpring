@@ -15,12 +15,10 @@
         <th>Created at</th>
     </tr>
     <tr th:each="operation : ${operations}">
-        <td th:text="${operation.getId()}"></td>
-        <td th:text="${operation.getAccount().getName()}"></td>
-        <td th:text="${operation.getSum()}"></td>
-        <td th:text="${operation.getCategory().getType()}"></td>
-        <td th:text="${operation.getComment()}"></td>
-        <td th:text="${operation.getCreatedAt()}"></td>
+        <td th:text="${operation.id()}"></td>
+        <td th:text="${operation.sum()}"></td>
+        <td th:text="${operation.comment()}"></td>
+        <td th:text="${operation.createdAt()}"></td>
     </tr>
 </table>
 </body>

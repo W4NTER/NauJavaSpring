@@ -33,8 +33,12 @@ public class User {
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
 
-    public User(String username, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    public User(String username,
+                OffsetDateTime createdAt,
+                OffsetDateTime updatedAt,
+                String password) {
         this.username = username;
+        this.password = password;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -42,6 +46,10 @@ public class User {
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Account> accountsSet;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Authority> authorities;
 
     @Override
     public String toString() {

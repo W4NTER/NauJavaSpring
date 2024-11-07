@@ -28,6 +28,7 @@ public class OperationController {
     }
 
     @PostMapping("/add")
+    @ResponseBody
     public OperationResponseDTO addOperation(@RequestBody OperationRequestDTO operationRequestDTO) {
         return operationsService.addOperation(operationRequestDTO);
     }

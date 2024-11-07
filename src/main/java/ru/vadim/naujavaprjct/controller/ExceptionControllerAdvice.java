@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.client.HttpClientErrorException;
 import ru.vadim.naujavaprjct.dto.CustomExceptionDTO;
 import ru.vadim.naujavaprjct.exception.CustomException;
 import ru.vadim.naujavaprjct.exception.EntityAlreadyExistsException;
@@ -66,5 +67,4 @@ public class ExceptionControllerAdvice {
         LOGGER.info(String.format("Exception type - (%s), Message - %s", e.getErrorType(), e.getMessage()));
         return new CustomExceptionDTO(e.getErrorType(), e.getMessage());
     }
-
 }
