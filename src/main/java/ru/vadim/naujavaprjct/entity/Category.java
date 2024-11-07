@@ -4,9 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-
 import java.time.OffsetDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -16,7 +15,7 @@ import java.util.List;
 public class Category {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "category_type", unique = true)
@@ -32,12 +31,23 @@ public class Category {
     private OffsetDateTime updatedAt;
 
     @OneToMany(mappedBy = "category")
-    private List<Operation> operationSet;
+    private Set<Operation> operationSet;
 
-    public Category(String type, String title, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Category(
+            String type,
+            String title,
+            OffsetDateTime createdAt,
+            OffsetDateTime updatedAt,
+            User user
+    ) {
         this.type = type;
         this.title = title;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.user = user;
     }
 }

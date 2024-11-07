@@ -15,7 +15,7 @@ import java.time.OffsetDateTime;
 public class Operation {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "sum")
@@ -38,10 +38,20 @@ public class Operation {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    public Operation(Long sum, String comment, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    public Operation(
+            Long sum,
+            String comment,
+            OffsetDateTime createdAt,
+            OffsetDateTime updatedAt,
+            Account accounts,
+            Category categories
+    ) {
         this.sum = sum;
         this.comment = comment;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.account = accounts;
+        this.category = categories;
     }
 }
+ 

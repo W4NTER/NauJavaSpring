@@ -1,7 +1,9 @@
 package ru.vadim.naujavaprjct.service;
 
-import ru.vadim.naujavaprjct.entity.Category;
+import ru.vadim.naujavaprjct.dto.request.CategoryRequestDTO;
+import ru.vadim.naujavaprjct.dto.response.CategoryResponseDTO;
 
 public interface CategoryService {
-    void deleteCategory(Category category);
+    void deleteCategory(Long categoryId);
+    CategoryResponseDTO addCategory(CategoryRequestDTO categories);
 }
